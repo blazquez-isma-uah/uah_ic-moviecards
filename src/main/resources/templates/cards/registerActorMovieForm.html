@@ -1,0 +1,54 @@
+<!--
+    Autor: Laura Cercas Ramos
+    Proyecto: TFM Integración Continua con GitHub Actions
+    Fecha: 04/06/2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FichasPeliculasApp | Aplicación de gestión de fichas de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mb-5">
+    <h2 th:text="${title}"
+        class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+    <div th:if="${message}" class='alert alert-danger' role='alert'>
+        <p th:text="${message}"></p>
+    </div>
+    <form th:action="@{/register}" method="post" th:object="${card}" enctype="multipart/form-data">
+        <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+            Por favor corrija los siguientes errores:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+        </div>
+        <div class="mb-3">
+            <label for="idActor" class="form-label">Seleccionar Actor</label>
+            <select class="form-control" th:field="*{idActor}" id="idActor" name="idActor" required="required">
+                <option th:each="actor : ${actors}" th:value="${actor.id}" th:text="${actor.name}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="idMovie" class="form-label">Seleccionar Película</label>
+            <select class="form-control" th:field="*{idMovie}" id="idMovie" name="idMovie" required="required">
+                <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+    </form>
+
+    <hr>
+    <a th:href="@{/}" class="btn btn-primary">Volver a la Página de Inicio</a>
+    <hr>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

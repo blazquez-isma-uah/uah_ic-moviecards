@@ -1,0 +1,6 @@
+# ignorar archivos compilados en /target
+/target
+
+# ignorar archivos de configuración de IDEs
+/.idea
+/.vscode

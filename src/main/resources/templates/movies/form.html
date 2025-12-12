@@ -1,0 +1,99 @@
+<!--
+    Autor: Laura Cercas Ramos
+    Proyecto: TFM Integración Continua con GitHub Actions
+    Fecha: 04/06/2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FichasPeliculasApp | Aplicación de gestión de fichas de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mb-5">
+    <h2 th:text="${title}"
+        class="title text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+    <div th:if="${message}" class='alert alert-success' role='alert'>
+        <p th:text="${message}"></p>
+    </div>
+    <form th:action="@{/saveMovie}" method="post" th:object="${movie}" enctype="multipart/form-data">
+        <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+            Por favor corrija los siguientes errores:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input type="text" class="form-control" th:field="*{title}" id="title" name="title"
+                   placeholder="Escriba el nombre de la película" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="year" class="form-label">Año</label>
+            <input type="number" class="form-control" th:field="*{releaseYear}" id="year" name="year"
+                   placeholder="Escriba el año de la película" required="required" step="1">
+        </div>
+        <div class="mb-3">
+            <label for="year" class="form-label">Duración</label>
+            <input type="number" class="form-control" th:field="*{duration}" id="duration" name="duration"
+                   placeholder="Escriba la duración de la película" required="required" step="1">
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">País</label>
+            <input type="text" class="form-control" th:field="*{country}" id="country" name="country"
+                   placeholder="Escriba el país de la película" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="director" class="form-label">Dirección</label>
+            <input type="text" class="form-control" th:field="*{director}" id="director" name="director"
+                   placeholder="Escriba el director/a de la película" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="genre" class="form-label">Género</label>
+            <select class="form-select" th:field="*{genre}" name="genre" id="genre">
+                <option value="" disabled selected>Selecciona un género</option>
+                <option th:value="Accion">Acción</option>
+                <option th:value="Aventuras">Aventuras</option>
+                <option th:value="CienciaFiccion">Ciencia Ficción</option>
+                <option th:value="Comedia">Comedia</option>
+                <option th:value="Drama">Drama</option>
+                <option th:value="Suspense">Suspense</option>
+                <option th:value="Terror">Terror</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="sinopsis" class="form-label">Sinopsis</label>
+            <input type="text" class="form-control" th:field="*{sinopsis}" id="sinopsis" name="sinopsis"
+                   placeholder="Escriba la sinopsis de la película" required="required">
+        </div>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+        <input type="hidden" th:field="*{id}"/>
+    </form>
+    <div th:if="${movie.id!=null}">
+        <hr>
+        <div class="actorClass mt-3" th:if="${actors != null}">
+            <h4 th:text="'Actores que han participado en la película ' + ${movie.title}"></h4>
+            <ul>
+                <li th:each="actor : ${actors}" th:text="${actor.name}"></li>
+            </ul>
+        </div>
+        <div class="noActorClass mt-3" th:if="${actors == null or #lists.isEmpty(actors)}">
+            <h4 th:text="'No hay ningun actor registrado que haya participado en esta película '"></h4>
+        </div>
+    </div>
+    <hr>
+    <a th:href="@{/}" class="btn btn-primary">Volver a la Página de Inicio</a>
+    <a th:if="${movie.id!=null}" th:href="@{/movies}" class="btn btn-secondary">Volver al listado de películas</a>
+
+    <hr>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

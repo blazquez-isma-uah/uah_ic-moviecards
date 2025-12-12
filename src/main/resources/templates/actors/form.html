@@ -1,0 +1,113 @@
+<!--
+    Autor: Laura Cercas Ramos
+    Proyecto: TFM Integración Continua con GitHub Actions
+    Fecha: 04/06/2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>
+        FichasPeliculasApp | Aplicación de gestión de fichas de películas
+    </title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container mb-5">
+    <h2
+            th:text="${title}"
+            class="title text-secondary border border-success border-top-0 border-left-0 border-right-0"
+    ></h2>
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+
+    <form
+            th:action="@{/saveActor}"
+            method="post"
+            th:object="${actor}"
+            enctype="multipart/form-data"
+    >
+        <div
+                th:if="${#fields.hasErrors('*')}"
+                class="alert alert-danger"
+                role="alert"
+        >
+            Por favor corrija los siguientes errores:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{name}"
+                    id="name"
+                    name="name"
+                    placeholder="Escriba el nombre del actor"
+                    required="required"
+            />
+        </div>
+        <div class="mb-3">
+            <label for="birthDate" class="form-label">Fecha nacimiento</label>
+            <input
+                    type="date"
+                    class="form-control"
+                    th:field="*{birthDate}"
+                    id="birthDate"
+                    name="birthDate"
+                    placeholder="Escriba la fecha de nacimiento"
+                    required="required"
+            />
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">País</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{country}"
+                    id="country"
+                    name="country"
+                    placeholder="Escriba el país del actor"
+                    required="required"
+            />
+        </div>
+        <button type="submit" class="btn btn-dark mb-3">Guardar</button>
+        <input type="hidden" th:field="*{id}"/>
+    </form>
+    <div th:if="${actor.id!=null}">
+        <hr/>
+        <div class="moviesClass mt-3" th:if="${movies != null}">
+            <h4
+                    th:text="'Películas en las que ha participado ' + ${actor.name}"
+            ></h4>
+            <ul>
+                <li th:each="movie : ${movies}" th:text="${movie.title}"></li>
+            </ul>
+        </div>
+        <div class="noMoviesClass mt-3" th:if="${movies == null or #lists.isEmpty(movies)}">
+            <h4
+                    th:text="'No hay ninguna película registrada en la que haya participado este actor '"
+            ></h4>
+        </div>
+    </div>
+
+    <hr/>
+    <a th:href="@{/}" class="btn btn-primary">Volver a la Página de Inicio</a>
+    <a
+            th:if="${actor.id!=null}"
+            th:href="@{/actors}"
+            class="btn btn-secondary"
+    >Volver al listado de actores</a
+    >
+    <hr/>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

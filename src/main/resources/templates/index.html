@@ -1,0 +1,79 @@
+<!--
+    Autor: Laura Cercas Ramos
+    Proyecto: TFM Integración Continua con GitHub Actions
+    Fecha: 04/06/2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FichasPeliculasApp | Aplicación de gestión de fichas de peliculas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div th:if="${message != null}" class='alert alert-success' th:text="${message}" role='alert'></div>
+    <h1 class="text-center">Gestión de peliculas</h1>
+    <hr>
+    <div class="card-group text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title registerActorMovie">Inscripción Actor en Pelicula</h3>
+                <a class="page-link" th:href="@{/registerActorMovie}">
+                    Inscripción Actor en Pelicula
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="card-group text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title actorList">Listado actores</h3>
+                <a class="page-link" th:href="@{/actors}">
+                    Listado de actores
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title newActor">Nuevo Actor</h3>
+                <a class="page-link" th:href="@{/actors/new}">
+                    Crear nuevo actor
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="card-group text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title moviesList">Listado peliculas</h3>
+                <a class="page-link" th:href="@{/movies}">
+                    Listado de peliculas
+                </a>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title newMovie">Nueva pelicula</h3>
+                <a class="page-link" th:href="@{/movies/new}">
+                    Crear nueva pelicula
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!--
+    Autor: Laura Cercas Ramos
+    Proyecto: TFM Integración Continua con GitHub Actions
+    Fecha: 04/06/2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FichasPeliculasApp | Aplicación de gestión de fichas de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mb-5">
+
+    <div class="card">
+        <h2 th:text="'Listado Peliculas'" class="card-header"></h2>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Identificador</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Sinopsis</th>
+                    <th scope="col">Editar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.id}"></td>
+                    <td th:text="${movie.title}"></td>
+                    <td th:text="${movie.releaseYear}"></td>
+                    <td th:text="${movie.duration}"></td>
+                    <td th:text="${movie.country}"></td>
+                    <td th:text="${movie.director}"></td>
+                    <td th:text="${movie.genre}"></td>
+                    <td th:text="${movie.sinopsis}"></td>
+                    <td>
+                        <a th:href="@{'/editMovie/' + ${movie.id}}" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <a th:href="@{/}" class="btn btn-primary">Volver a la Página de Inicio</a>
+    <hr>
+</div> <!-- /container -->
+</body>
+</html>
