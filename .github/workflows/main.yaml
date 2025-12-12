@@ -48,10 +48,21 @@ jobs:
 
   qa:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    continue-on-error: true
     steps:
-    - name: calidad
-      run: echo "calidad"
+    - name: Descargar repositorio
+      uses: actions/checkout@v2
+    - name: Instalar JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: "11"
+        distribution: "adopt"
+    - name: Construir con Maven
+      run: mvn clean package -DskipTests
+    - name: Revisar la calidad con Sonarqube
+      run: |
+        mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
 
   deploy:
     needs: qa
