@@ -45,7 +45,7 @@ public class Actor {
     }
 
     public String getName() {
-        return "Hola";
+        return name;
     }
 
     public void setName(String name) {
