@@ -19,3 +19,24 @@ jobs:
       with:
         name: moviecards-java
         path: "${{ github.workspace }}/target/*.jar"
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: pruebas
+      run: echo "pruebas"
+
+  qa:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: calidad
+      run: echo "calidad"
+
+  deploy:
+    needs: qa
+    runs-on: ubuntu-latest
+    steps:
+    - name: despliegue
+      run: echo "despliegue"
