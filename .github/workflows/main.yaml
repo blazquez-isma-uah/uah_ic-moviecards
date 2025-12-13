@@ -65,8 +65,20 @@ jobs:
         mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
 
   deploy:
-    needs: qa
     runs-on: ubuntu-latest
+    needs: qa # Asegura que el despliegue solo ocurra si el trabajo de QA se completa
+    if: github.ref=='refs/heads/master' # Despliega solo cuando se haga push a la rama master
     steps:
-    - name: despliegue
-      run: echo "despliegue"
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: moviecards-java # Para que coincida con el nombre usado en el trabajo de build
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'moviecards-ismael'
+        slot-name: 'Production'
+        package: '*.jar'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_43FDD9ACBA564E8FA3D56005780CB0F2 }}
