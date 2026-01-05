@@ -63,10 +63,37 @@ jobs:
     - name: Revisar la calidad con Sonarqube
       run: |
         mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
-
-  deploy:
+  
+  stage:
     runs-on: ubuntu-latest
     needs: qa # Asegura que el despliegue solo ocurra si el trabajo de QA se completa
+    environment:
+      name: 'Stage'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+    # - name: Aprobación manual
+    #   uses: trstringer/manual-approval@v1
+    #   with:
+    #     secret: ${{ secrets.TOKEN }}
+    #     approvers: blazquez-isma-uah
+
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: moviecards-java # Para que coincida con el nombre usado en el trabajo de build
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'moviecards-ismael-pre' # https://moviecards-ismael-pre.azurewebsites.net/
+        slot-name: 'Stage'
+        package: '*.jar'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9826CE1CBE0741AF9C985D67A8C1DFA8 }}
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: stage # Asegura que el despliegue solo ocurra si el trabajo de Stage se completa
     # Despliega solo si se hace push a la rama master
     if: github.ref=='refs/heads/master' 
     environment:
