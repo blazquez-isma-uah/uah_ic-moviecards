@@ -47,6 +47,7 @@ public class ActorE2ETest {
 
         assertTrue(driver.findElement(By.id("name")).isDisplayed());
         assertTrue(driver.findElement(By.id("birthDate")).isDisplayed());
+        assertTrue(driver.findElement(By.id("deadDate")).isDisplayed());
         assertTrue(driver.findElement(By.id("country")).isDisplayed());
 
     }
@@ -73,8 +74,9 @@ public class ActorE2ETest {
         assertEquals("Identificador", headerRow.findElements(By.tagName("th")).get(0).getText());
         assertEquals("Nombre", headerRow.findElements(By.tagName("th")).get(1).getText());
         assertEquals("Fecha Nacimiento", headerRow.findElements(By.tagName("th")).get(2).getText());
-        assertEquals("Pais", headerRow.findElements(By.tagName("th")).get(3).getText());
-        assertEquals("Editar", headerRow.findElements(By.tagName("th")).get(4).getText());
+        assertEquals("Fecha Fallecimiento", headerRow.findElements(By.tagName("th")).get(3).getText());
+        assertEquals("Pais", headerRow.findElements(By.tagName("th")).get(4).getText());
+        assertEquals("Editar", headerRow.findElements(By.tagName("th")).get(5).getText());
 
     }
 

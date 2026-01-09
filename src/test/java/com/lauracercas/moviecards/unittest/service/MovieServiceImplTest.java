@@ -1,7 +1,6 @@
 package com.lauracercas.moviecards.unittest.service;
 
 import com.lauracercas.moviecards.model.Movie;
-import com.lauracercas.moviecards.repositories.MovieJPA;
 import com.lauracercas.moviecards.service.movie.MovieService;
 import com.lauracercas.moviecards.service.movie.MovieServiceImpl;
 import org.junit.jupiter.api.AfterEach;
