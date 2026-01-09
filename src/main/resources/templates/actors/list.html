@@ -22,6 +22,7 @@
                     <th scope="col">Identificador</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Fecha Nacimiento</th>
+                    <th scope="col">Fecha Fallecimiento</th>
                     <th scope="col">Pais</th>
                     <th scope="col">Editar</th>
                 </tr>
@@ -31,6 +32,7 @@
                     <td th:text="${actor.id}"></td>
                     <td th:text="${actor.name}"></td>
                     <td th:text="${#dates.format(actor.birthDate, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${actor.deadDate != null ? #dates.format(actor.deadDate, 'dd-MM-yyyy') : '-'}"></td>
                     <td th:text="${actor.country}"></td>
                     <td>
                         <a th:href="@{'/editActor/' + ${actor.id}}" class="btn btn-primary">Editar</a>
