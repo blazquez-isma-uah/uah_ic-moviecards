@@ -23,6 +23,9 @@ import java.util.List;
 @Controller
 public class ActorController {
 
+    private static final String ACTORS_FORM = "actors/form";
+    private static final String TITLE = "title";
+    private static final String ACTOR = "actor";
     private final ActorService actorService;
 
     public ActorController(ActorService actorService) {
@@ -37,15 +40,15 @@ public class ActorController {
 
     @GetMapping("actors/new")
     public String newActor(Model model) {
-        model.addAttribute("actor", new Actor());
-        model.addAttribute("title", Messages.NEW_ACTOR_TITLE);
-        return "actors/form";
+        model.addAttribute(ACTOR, new Actor());
+        model.addAttribute(TITLE, Messages.NEW_ACTOR_TITLE);
+        return ACTORS_FORM;
     }
 
     @PostMapping("saveActor")
     public String saveActor(@ModelAttribute Actor actor, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "actors/form";
+            return ACTORS_FORM;
         }
         Actor actorSaved = actorService.save(actor);
         if (actor.getId() != null) {
@@ -54,21 +57,21 @@ public class ActorController {
             model.addAttribute("message", Messages.SAVED_ACTOR_SUCCESS);
         }
 
-        model.addAttribute("actor", actorSaved);
-        model.addAttribute("title", Messages.EDIT_ACTOR_TITLE);
-        return "actors/form";
+        model.addAttribute(ACTOR, actorSaved);
+        model.addAttribute(TITLE, Messages.EDIT_ACTOR_TITLE);
+        return ACTORS_FORM;
     }
 
     @GetMapping("editActor/{actorId}")
     public String editActor(@PathVariable Integer actorId, Model model) {
         Actor actor = actorService.getActorById(actorId);
         List<Movie> movies = actor.getMovies();
-        model.addAttribute("actor", actor);
+        model.addAttribute(ACTOR, actor);
         model.addAttribute("movies", movies);
 
-        model.addAttribute("title", Messages.EDIT_ACTOR_TITLE);
+        model.addAttribute(TITLE, Messages.EDIT_ACTOR_TITLE);
 
-        return "actors/form";
+        return ACTORS_FORM;
     }
 
 
