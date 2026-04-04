@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"   # o "npm", "pip", etc.
+    directory: "/"
+    schedule:
+      interval: "daily"
